@@ -1,3 +1,5 @@
+C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.AssemblyReference.cache
+C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\bin\WebApplication1.dll.config
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\bin\WebApplication1.dll
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\bin\WebApplication1.pdb
@@ -92,13 +94,8 @@ C:\2025\專案之後\HTML\WebApplication1\WebApplication1\bin\zh-Hant\System.Web
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\bin\zh-Hant\System.Web.WebPages.resources.dll
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\bin\zh-Hant\System.Web.WebPages.Deployment.resources.dll
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\bin\zh-Hant\System.Web.WebPages.Razor.resources.dll
-C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.AssemblyReference.cache
-C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebAppli.7D14BD69.Up2Date
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
-C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.CountyDistrictTables.resources
+C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.formdataOthersReportTypeTable.resources
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.GenerateResource.cache
-C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.AddCreateAtDistrict.resources
-C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.AddDistrictName.resources
-C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.postalcode.resources

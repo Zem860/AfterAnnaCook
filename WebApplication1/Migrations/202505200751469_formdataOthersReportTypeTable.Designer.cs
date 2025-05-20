@@ -7,13 +7,13 @@ namespace WebApplication1.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class AddDistrictName : IMigrationMetadata
+    public sealed partial class formdataOthersReportTypeTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDistrictName));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(formdataOthersReportTypeTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202505190333415_AddDistrictName"; }
+            get { return "202505200751469_formdataOthersReportTypeTable"; }
         }
         
         string IMigrationMetadata.Source

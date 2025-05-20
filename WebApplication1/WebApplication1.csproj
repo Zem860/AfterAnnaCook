@@ -169,27 +169,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202505190259383_CountyDistrictTables.cs" />
-    <Compile Include="Migrations\202505190259383_CountyDistrictTables.Designer.cs">
-      <DependentUpon>202505190259383_CountyDistrictTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202505190302566_AddCreateAtDistrict.cs" />
-    <Compile Include="Migrations\202505190302566_AddCreateAtDistrict.Designer.cs">
-      <DependentUpon>202505190302566_AddCreateAtDistrict.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202505190333415_AddDistrictName.cs" />
-    <Compile Include="Migrations\202505190333415_AddDistrictName.Designer.cs">
-      <DependentUpon>202505190333415_AddDistrictName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202505200415072_postalcode.cs" />
-    <Compile Include="Migrations\202505200415072_postalcode.Designer.cs">
-      <DependentUpon>202505200415072_postalcode.cs</DependentUpon>
+    <Compile Include="Migrations\202505200751469_formdataOthersReportTypeTable.cs" />
+    <Compile Include="Migrations\202505200751469_formdataOthersReportTypeTable.Designer.cs">
+      <DependentUpon>202505200751469_formdataOthersReportTypeTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\FormDestination.cs" />
     <Compile Include="Models\Counties.cs" />
     <Compile Include="Models\Districts.cs" />
+    <Compile Include="Models\FormData.cs" />
     <Compile Include="Models\HW1.cs" />
+    <Compile Include="Models\Others.cs" />
+    <Compile Include="Models\ReportType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -334,17 +324,8 @@
     <Content Include="Scripts\jquery-3.7.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202505190259383_CountyDistrictTables.resx">
-      <DependentUpon>202505190259383_CountyDistrictTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202505190302566_AddCreateAtDistrict.resx">
-      <DependentUpon>202505190302566_AddCreateAtDistrict.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202505190333415_AddDistrictName.resx">
-      <DependentUpon>202505190333415_AddDistrictName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202505200415072_postalcode.resx">
-      <DependentUpon>202505200415072_postalcode.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202505200751469_formdataOthersReportTypeTable.resx">
+      <DependentUpon>202505200751469_formdataOthersReportTypeTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
