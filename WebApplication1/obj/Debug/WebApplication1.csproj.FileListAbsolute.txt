@@ -101,3 +101,4 @@ C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplicati
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.GenerateResource.cache
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.AddCreateAtDistrict.resources
 C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.AddDistrictName.resources
+C:\2025\專案之後\HTML\WebApplication1\WebApplication1\obj\Debug\WebApplication1.Migrations.postalcode.resources

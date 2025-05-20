@@ -6,6 +6,11 @@
 </head>
 <body>
     <h1>請選擇縣市</h1>
+    <div style="display:flex">
+        <label for="postal">郵遞區號查詢</label>
+        <input type="text" id="postal" readonly  name="PostalCode" placeholder="123">
+        <button class="checkPostal" type="button">郵遞區號查詢</button>
+    </div>
     <select id="county-dropdown">
         <option value="">-- 請選擇 --</option>
     </select>
@@ -16,6 +21,7 @@
 </body>
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function () {
         const countyDropdown = document.getElementById('county-dropdown');
         const districtDropdown = document.getElementById('district-dropdown');
@@ -44,7 +50,6 @@
         // 當選擇縣市時，載入對應區域
         countyDropdown.addEventListener('change', function () {
             const selectedCounty = countyDropdown.value;
-            console.log('選擇的縣市 ID:', selectedCounty); // Debug
 
             // 清空區域選單
             districtDropdown.innerHTML = '<option value="">-- 請選擇 --</option>';
@@ -61,16 +66,48 @@
                 .then(function (data) {
                     data.forEach(function (district) {
                         const option = document.createElement('option');
-                        option.value = district;   // ✅ 用區域名稱當 value（也可以是 id）
-                        option.text = district;
+                        option.value = district.Id; // ✅ 使用 ID
+                        option.text = district.DistrictName; // ✅ 顯示名稱
+                        //option.value = district;   // ✅ 用區域名稱當 value（也可以是 id）
+                        //option.text = district;
                         districtDropdown.appendChild(option);
                     });
                 })
                 .catch(function (error) {
                     console.error('取得區域資料失敗:', error);
                 });
+
         });
+
     });
+
+    const postalBtn = document.querySelector('.checkPostal');
+    postalBtn.addEventListener('click', function () {
+        const districtDropdown = document.getElementById('district-dropdown');
+        const selectedDistrict = districtDropdown.value;
+
+        if (!selectedDistrict) {
+            alert("請先選擇區域");
+            return;
+        }
+
+        fetch(`https://localhost:44341/api/init/getPostalCode?id=${encodeURIComponent(selectedDistrict)}`)
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('網路錯誤');
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log('取得的郵遞區號資料：', data);
+                const postal = document.getElementById('postal');
+                postal.value = data; // ✅ 正確做法：寫入 input 欄位的值
+            })
+            .catch(function (error) {
+                console.error('取得郵遞區號失敗:', error);
+            });
+    });
+
 </script>
 
 </html>

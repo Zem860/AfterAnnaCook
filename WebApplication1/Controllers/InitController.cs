@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
         [Route("api/init/getCounties")]
         public IHttpActionResult getCounties()
         {
-            var counties = db.Counties.Select(c => new {c.Id, c.CountyName}).ToList();
+            var counties = db.Counties.Select(c => new { c.Id, c.CountyName }).ToList();
             return Ok(counties);
         }
 
@@ -25,8 +25,19 @@ namespace WebApplication1.Controllers
         [Route("api/init/getDistricts")]
         public IHttpActionResult getDistricts(int id)
         {
-            List<string> districts = db.Districts.Where(d=>d.CountyId == id).Select(d => d.DistrictName).ToList();
+            var districts = db.Districts.Where(d => d.CountyId == id).Select(d => new { d.Id, d.DistrictName }).ToList();
             return Ok(districts);
+        }
+        [HttpGet]
+        [Route("api/init/getPostalCode")]
+        public IHttpActionResult getPostalCode(int id)
+        {
+            var postalCode = db.Districts.Where(d => d.Id == id).Select(d => d.PostalCode).FirstOrDefault();
+            if (postalCode == null)
+            {
+                return NotFound();
+            }
+            return Ok(postalCode);
         }
     }
 }

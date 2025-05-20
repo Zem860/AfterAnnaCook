@@ -22,6 +22,11 @@ namespace WebApplication1.Models
         [Column(TypeName = "nvarchar")]
         [MaxLength(20)]
         public string DistrictName { get; set; }
+        [Required]
+        [Display(Name = "郵遞區號")]
+        [StringLength(5, ErrorMessage = "郵遞區號必須為3碼")]
+        [RegularExpression(@"^\d{3}$", ErrorMessage = "郵遞區號必須是 3 位數字")]
+        public string PostalCode { get; set; }
 
         [Column (TypeName = "DATETIME")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

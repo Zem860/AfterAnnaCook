@@ -181,7 +181,12 @@
     <Compile Include="Migrations\202505190333415_AddDistrictName.Designer.cs">
       <DependentUpon>202505190333415_AddDistrictName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202505200415072_postalcode.cs" />
+    <Compile Include="Migrations\202505200415072_postalcode.Designer.cs">
+      <DependentUpon>202505200415072_postalcode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\FormDestination.cs" />
     <Compile Include="Models\Counties.cs" />
     <Compile Include="Models\Districts.cs" />
     <Compile Include="Models\HW1.cs" />
@@ -337,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202505190333415_AddDistrictName.resx">
       <DependentUpon>202505190333415_AddDistrictName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505200415072_postalcode.resx">
+      <DependentUpon>202505200415072_postalcode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
