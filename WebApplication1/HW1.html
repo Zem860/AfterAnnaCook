@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>請選擇縣市</h1>
+    <select id="county-dropdown">
+        <option value="">-- 請選擇 --</option>
+    </select>
+    <h2>請選擇區域</h2>
+    <select id="district-dropdown">
+        <option value="">-- 請選擇 --</option>
+    </select>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const countyDropdown = document.getElementById('county-dropdown');
+        const districtDropdown = document.getElementById('district-dropdown');
+
+        // 載入縣市資料
+        fetch('https://localhost:44341/api/init/getCounties')
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('網路錯誤');
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log('取得的縣市資料：', data); // 🔍 加這行
+                data.forEach(function (county) {
+                    const option = document.createElement('option');
+                    option.value = county.Id; // ✅ 使用 ID
+                    option.text = county.CountyName; // ✅ 顯示名稱
+                    countyDropdown.appendChild(option);
+                });
+            })
+            .catch(function (error) {
+                console.error('取得縣市資料失敗:', error);
+            });
+
+        // 當選擇縣市時，載入對應區域
+        countyDropdown.addEventListener('change', function () {
+            const selectedCounty = countyDropdown.value;
+            console.log('選擇的縣市 ID:', selectedCounty); // Debug
+
+            // 清空區域選單
+            districtDropdown.innerHTML = '<option value="">-- 請選擇 --</option>';
+
+            if (!selectedCounty) return;
+
+            fetch(`https://localhost:44341/api/init/getDistricts?id=${encodeURIComponent(selectedCounty)}`)
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('網路錯誤');
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    data.forEach(function (district) {
+                        const option = document.createElement('option');
+                        option.value = district;   // ✅ 用區域名稱當 value（也可以是 id）
+                        option.text = district;
+                        districtDropdown.appendChild(option);
+                    });
+                })
+                .catch(function (error) {
+                    console.error('取得區域資料失敗:', error);
+                });
+        });
+    });
+</script>
+
+</html>
