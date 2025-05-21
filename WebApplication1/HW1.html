@@ -1,113 +1,248 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <h1>請選擇縣市</h1>
-    <div style="display:flex">
-        <label for="postal">郵遞區號查詢</label>
-        <input type="text" id="postal" readonly  name="PostalCode" placeholder="123">
-        <button class="checkPostal" type="button">郵遞區號查詢</button>
-    </div>
-    <select id="county-dropdown">
-        <option value="">-- 請選擇 --</option>
-    </select>
-    <h2>請選擇區域</h2>
-    <select id="district-dropdown">
-        <option value="">-- 請選擇 --</option>
-    </select>
-</body>
+﻿    <!DOCTYPE html>
+    <html lang="zh-Hant">
+    <head>
+        <meta charset="UTF-8">
+        <title>營業與聯絡地址表單</title>
+    </head>
+    <body>
+        <h1>填寫營業資訊</h1>
 
-<script>
+        <form id="formData">
+            <label>營業人名稱：<input type="text" name="BusinessName" required maxlength="20"></label><br>
+            <label>統一編號：<input type="text" name="TaxId" pattern="\d{8}" required></label><br>
+            <label>負責人姓名：<input type="text" name="ResponsiblePersonName" required maxlength="20"></label><br>
+            <label>身分證字號：<input type="text" name="PersonalId" pattern="[A-Z]{1}[12]{1}\d{8}" required></label><br>
+            <label>
+                申報方式：
+                <select name="ReportTypeId" required>
+                    <option value="1">一般申報</option>
+                    <option value="2">特殊申報</option>
+                </select>
+            </label><br>
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const countyDropdown = document.getElementById('county-dropdown');
-        const districtDropdown = document.getElementById('district-dropdown');
+            <label>
+                其他說明：
+                <select name="OtherId" required>
+                    <option value="1">無</option>
+                    <option value="2">特殊備註</option>
+                </select>
+            </label><br>
 
-        // 載入縣市資料
-        fetch('https://localhost:44341/api/init/getCounties')
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error('網路錯誤');
-                }
-                return response.json();
-            })
-            .then(function (data) {
-                console.log('取得的縣市資料：', data); // 🔍 加這行
-                data.forEach(function (county) {
-                    const option = document.createElement('option');
-                    option.value = county.Id; // ✅ 使用 ID
-                    option.text = county.CountyName; // ✅ 顯示名稱
-                    countyDropdown.appendChild(option);
-                });
-            })
-            .catch(function (error) {
-                console.error('取得縣市資料失敗:', error);
-            });
+            <input type="hidden" name="IsSameAsBusinessAddress" value="false">
+            <label>
+                <input type="checkbox" id="same-address-checkbox" name="IsSameAsBusinessAddress" value="true">
+                聯絡地址與營業地址相同
+            </label><br>
 
-        // 當選擇縣市時，載入對應區域
-        countyDropdown.addEventListener('change', function () {
-            const selectedCounty = countyDropdown.value;
+            <fieldset>
+                <legend>營業地址</legend>
+                <label>
+                    縣市：
+                    <select id="business-county-dropdown" name="BusinessCountyId" required></select>
+                </label>
+                <label>
+                    區域：
+                    <select id="business-district-dropdown" name="BusinessDistrictId" required></select>
+                </label>
+                <label>詳細地址：<input type="text" name="BusinessAddress" required maxlength="30"></label><br>
+                <label>郵遞區號：<input type="text" id="postal" name="BusinessPostalCode" readonly></label>
+                <button type="button" class="checkPostal" data-type="business">查詢郵遞區號</button>
+            </fieldset>
 
-            // 清空區域選單
-            districtDropdown.innerHTML = '<option value="">-- 請選擇 --</option>';
+            <fieldset>
+                <legend>聯絡人資料</legend>
+                <label>聯絡人姓名：<input type="text" name="ContactPersonName" required maxlength="20"></label><br>
+                <label>電話：<input type="text" name="ContactPhone" pattern="0\d{1,2}-\d{6,8}"></label><br>
+                <label>手機：<input type="text" name="ContactCellPhone" pattern="09\d{8}"></label><br>
+                <label>分機：<input type="text" name="ContactExt" pattern="\d{1,5}"></label><br>
 
-            if (!selectedCounty) return;
+                <label>
+                    <input type="checkbox" id="same-address-checkbox"> 聯絡地址與營業地址相同
+                </label><br>
 
-            fetch(`https://localhost:44341/api/init/getDistricts?id=${encodeURIComponent(selectedCounty)}`)
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('網路錯誤');
-                    }
-                    return response.json();
-                })
-                .then(function (data) {
-                    data.forEach(function (district) {
-                        const option = document.createElement('option');
-                        option.value = district.Id; // ✅ 使用 ID
-                        option.text = district.DistrictName; // ✅ 顯示名稱
-                        //option.value = district;   // ✅ 用區域名稱當 value（也可以是 id）
-                        //option.text = district;
-                        districtDropdown.appendChild(option);
+                <label>
+                    縣市：
+                    <select id="contact-county-dropdown" name="ContactCountyId" required></select>
+                </label>
+                <label>
+                    區域：
+                    <select id="contact-district-dropdown" name="ContactDistrictId" required></select>
+                </label>
+                <label>詳細地址：<input type="text" name="ContactAddress" required maxlength="30"></label><br>
+                <label>郵遞區號：<input type="text" id="contact-postal" name="ContactPostalCode" readonly></label>
+                <button type="button" class="checkPostal" data-type="contact">查詢郵遞區號</button>
+                <br>
+                <label>Email：<input type="email" name="ContactEmail" required maxlength="30"></label>
+            </fieldset>
+
+            <button type="submit">送出</button>
+        </form>
+
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const countyDropdown = document.getElementById('business-county-dropdown');
+                const districtDropdown = document.getElementById('business-district-dropdown');
+
+                // 載入縣市資料
+                fetch('https://localhost:44341/api/init/getCounties')
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('網路錯誤');
+                        }
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        console.log('取得的縣市資料：', data); // 🔍 加這行
+                        data.forEach(function (county) {
+                            const option = document.createElement('option');
+                            option.value = county.Id; // ✅ 使用 ID
+                            option.text = county.CountyName; // ✅ 顯示名稱
+                            countyDropdown.appendChild(option);
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error('取得縣市資料失敗:', error);
                     });
-                })
-                .catch(function (error) {
-                    console.error('取得區域資料失敗:', error);
+
+                // 當選擇縣市時，載入對應區域
+                countyDropdown.addEventListener('change', function () {
+                    const selectedCounty = countyDropdown.value;
+                    console.log(selectedCounty)
+                    // 清空區域選單
+                    districtDropdown.innerHTML = '<option value="">-- 請選擇 --</option>';
+
+                    if (!selectedCounty) return;
+
+                    fetch(`https://localhost:44341/api/init/getDistricts?id=${encodeURIComponent(selectedCounty)}`)
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error('網路錯誤');
+                            }
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            data.forEach(function (district) {
+                                const option = document.createElement('option');
+                                option.value = district.Id; // ✅ 使用 ID
+                                option.text = district.DistrictName; // ✅ 顯示名稱
+                                //option.value = district;   // ✅ 用區域名稱當 value（也可以是 id）
+                                //option.text = district;
+                                districtDropdown.appendChild(option);
+                            });
+                        })
+                        .catch(function (error) {
+                            console.error('取得區域資料失敗:', error);
+                        });
+
                 });
 
-        });
-
-    });
-
-    const postalBtn = document.querySelector('.checkPostal');
-    postalBtn.addEventListener('click', function () {
-        const districtDropdown = document.getElementById('district-dropdown');
-        const selectedDistrict = districtDropdown.value;
-
-        if (!selectedDistrict) {
-            alert("請先選擇區域");
-            return;
-        }
-
-        fetch(`https://localhost:44341/api/init/getPostalCode?id=${encodeURIComponent(selectedDistrict)}`)
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error('網路錯誤');
-                }
-                return response.json();
-            })
-            .then(function (data) {
-                console.log('取得的郵遞區號資料：', data);
-                const postal = document.getElementById('postal');
-                postal.value = data; // ✅ 正確做法：寫入 input 欄位的值
-            })
-            .catch(function (error) {
-                console.error('取得郵遞區號失敗:', error);
             });
-    });
 
-</script>
+            const postalBtn = document.querySelector('.checkPostal');
+            postalBtn.addEventListener('click', function () {
+                const districtDropdown = document.getElementById('business-district-dropdown');
 
-</html>
+                const selectedDistrict = districtDropdown.value;
+
+                if (!selectedDistrict) {
+                    alert("請先選擇區域");
+                    return;
+                }
+
+                fetch(`https://localhost:44341/api/init/getPostalCode?id=${encodeURIComponent(selectedDistrict)}`)
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('網路錯誤');
+                        }
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        console.log('取得的郵遞區號資料：', data);
+                        const postal = document.getElementById('postal');
+                        postal.value = data; // ✅ 正確做法：寫入 input 欄位的值
+                    })
+                    .catch(function (error) {
+                        console.error('取得郵遞區號失敗:', error);
+                    });
+            });
+
+            const checkBoxSame = document.querySelector('#same-address-checkbox')
+            checkBoxSame.addEventListener('change', () => {
+                const businessCounty = document.querySelector('#business-county-dropdown')
+                const businessDistrict = document.querySelector('#business-district-dropdown')
+                const contactCounty = document.querySelector('#contact-county-dropdown')
+                const contactDistrict = document.querySelector('#contact-district-dropdown')
+                const contactAddress = document.querySelector('input[name="ContactAddress"]')
+                const contactPostalCode = document.querySelector('#contact-postal')
+
+                if (checkBoxSame.checked) {
+                    copySelectValueAndText(businessCounty, contactCounty)
+                    copySelectValueAndText(businessDistrict, contactDistrict)
+
+                    contactAddress.value = document.querySelector('input[name="BusinessAddress"]').value
+                    contactPostalCode.value = document.querySelector('input[name="BusinessPostalCode"]').value
+                } else {
+                    contactCounty.value = ''
+                    contactDistrict.value = ''
+                    contactAddress.value = ''
+                    contactPostalCode.value = ''
+                }
+            })
+            function copySelectValueAndText(fromSelect, toSelect) {
+                const selectedOption = fromSelect.options[fromSelect.selectedIndex]
+                const value = selectedOption.value
+                const text = selectedOption.text
+
+                // 檢查 contact select 裡面是否已有對應的 option
+                let targetOption = Array.from(toSelect.options).find(opt => opt.value === value)
+
+                if (!targetOption) {
+                    // 若沒有，則新增對應 option
+                    targetOption = document.createElement('option')
+                    targetOption.value = value
+                    targetOption.text = text
+                    toSelect.appendChild(targetOption)
+                }
+
+                toSelect.value = value
+            }
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('formData');
+
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault(); // 阻止預設送出行為（避免變成 GET）
+
+                    console.log("✅ 表單已提交");
+
+                    const formData = new FormData(form);
+                    const plainData = Object.fromEntries(formData.entries());
+                    const jsonData = JSON.stringify(plainData);
+                    console.log(jsonData);
+                    fetch('https://localhost:44341/api/send/formdata', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: jsonData
+                    })
+                        .then(res => {
+                            if (!res.ok) throw new Error("送出失敗");
+                            return res.json();
+                        })
+                        .then(data => {
+                            alert("送出成功！");
+                            console.log(data);
+                        })
+                        .catch(err => {
+                            alert("送出失敗：" + err.message);
+                            console.error(err);
+                        });
+                });
+            });
+
+        </script>
+    </body>
+
+
+    </html>

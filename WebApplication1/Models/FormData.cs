@@ -60,21 +60,19 @@ namespace WebApplication1.Models
         [MaxLength(30)]
         [Display(Name ="營業詳細地址")]
         public string BusinessAddress { get; set; }
-        [Required]
         [Display(Name = "申報方式")]
-        public int ReportTypeId { get; set; }
+        public int ReportTypeId { get; set; } = 1;
         [JsonIgnore]
         [ForeignKey("ReportTypeId")]
-        public virtual ReportType ReportType { get; set; }
+        public virtual ReportType ReportType { get; set; } 
 
         [Display(Name = "起始年")]
-        public int StartYear { get; set; }
+        public int StartYear { get; set; } = 2025;
         [Display(Name = "起始月")]
-        public int startMonth { get; set; }
+        public int startMonth { get; set; } = 1;
 
-        [Required]
         [Display(Name = "其他說明")]
-        public int OtherId { get; set; }
+        public int OtherId { get; set; } = 1;
         [JsonIgnore]
         [ForeignKey("OtherId")]
         public virtual Others Other { get; set; }
